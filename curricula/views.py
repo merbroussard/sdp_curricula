@@ -1,5 +1,6 @@
-from curricula.models import GradeCurriculum, LearningMaterial
+from .models import Curriculum, GradeCurriculum, LearningMaterial, PublisherGroup
 from django.views.generic import ListView
+from django.http import HttpResponse
 
 
 class LearningMaterialDetailView(ListView):
@@ -43,3 +44,10 @@ class IndexListView(ListView):
 
     template_name = "index.html"
     model = GradeCurriculum
+
+
+def testing(request):
+    curricula_list = Curriculum.objects.order_by('name')
+    pubs = PublisherGroup.objects.all()
+    output = "\n".join([c.name for c in pubs])
+    return HttpResponse(output)
